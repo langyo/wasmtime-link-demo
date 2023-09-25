@@ -13,7 +13,13 @@ async fn main() -> Result<()> {
     println!("Module imports: {:?}", module.imports().collect::<Vec<_>>());
 
     let mut linker = Linker::new(&engine);
-    linker.func_wrap("tairitsu", "outside_func", |i: i32| -> i32 {
+    /*
+        由 rust 编译出来的 wasm 从外部包含模块时，默认模块名为 env
+        如果需要更改这里的 module 参数，
+        请在对应的 wasm 模块的导出函数（`extern "C"` 内）的声明前
+        加上过程宏 `#[link(wasm_import_module = "模块名")]`
+    */
+    linker.func_wrap("env", "outside_func", |i: i32| -> i32 {
         println!("outside_func: {}", i);
         i * 114514
     })?;
