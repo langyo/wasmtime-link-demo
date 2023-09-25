@@ -1,0 +1,11 @@
+[config]
+default_to_workspace = false
+skip_core_tasks = true
+
+[tasks.run]
+script = '''
+#!@duckscript
+
+exec cargo build --target wasm32-unknown-unknown --release --package plugin
+exec cargo run --package vm
+'''
