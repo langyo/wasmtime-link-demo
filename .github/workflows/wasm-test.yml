@@ -1,0 +1,36 @@
+name: WASM Test
+on: [push]
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - uses: davidB/rust-cargo-make@v1
+      - uses: actions/checkout@v1
+      - name: Run cargo-make
+        run: cargo make run
+  Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - uses: davidB/rust-cargo-make@v1
+      - uses: actions/checkout@v1
+      - name: Run cargo-make
+        run: cargo make run
+  MacOS:
+    runs-on: macos-latest
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - uses: davidB/rust-cargo-make@v1
+      - uses: actions/checkout@v1
+      - name: Run cargo-make
+        run: cargo make run
