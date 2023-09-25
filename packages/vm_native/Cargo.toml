@@ -1,0 +1,10 @@
+[package]
+name = "vm_native"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "*"
+tokio = { version = "*", features = ["full"] }
+
+libloading = "^0.8"

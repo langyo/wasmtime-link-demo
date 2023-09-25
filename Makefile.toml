@@ -9,3 +9,11 @@ script = '''
 exec cargo build --target wasm32-unknown-unknown --release --package plugin
 exec cargo run --package vm
 '''
+
+[tasks.run-native]
+script = '''
+#!@duckscript
+
+exec cargo build --release --package lib_native
+exec cargo run --package vm_native
+'''
