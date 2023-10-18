@@ -1,8 +1,7 @@
-pub use lib::foo;
+pub use lib;
 
-#[no_mangle]
-pub fn bar(i: i32) -> i32 {
-    foo(i)
+pub fn main() {
+    unsafe {
+        lib::ready(lib::get_heap_address());
+    }
 }
-
-pub fn main() {}

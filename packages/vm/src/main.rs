@@ -19,17 +19,19 @@ async fn main() -> Result<()> {
         请在对应的 wasm 模块的导出函数（`extern "C"` 内）的声明前
         加上过程宏 `#[link(wasm_import_module = "模块名")]`
     */
-    linker.func_wrap("env", "outside_func", |i: i32| -> i32 {
-        println!("outside_func: {}", i);
-        i * 114514
+    linker.func_wrap("env", "ready", |address: i32| {
+        println!("Get heap address from plugin: {}", address);
     })?;
 
     let mut store = Store::new(&engine, ());
     let instance = linker.instantiate(&mut store, &module)?;
 
-    let inside_func = instance.get_typed_func::<i32, i32>(&mut store, "bar")?;
-    let result = inside_func.call(&mut store, 233)?;
-    println!("Answer: {:?}", result);
+    let inside_func = instance.get_typed_func::<(), i32>(&mut store, "get_heap_address")?;
+    let result = inside_func.call(&mut store, ())?;
+    println!("Get heap address from vm: {:?}", result);
+
+    let main_func = instance.get_typed_func::<(i32, i32), i32>(&mut store, "main")?;
+    main_func.call(&mut store, (0, 0))?;
 
     Ok(())
 }

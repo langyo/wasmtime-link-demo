@@ -1668,3 +1668,15 @@ dependencies = [
  "libc",
  "pkg-config",
 ]
+
+[[patch.unused]]
+name = "hikari-components"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "hikari-web"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "tairitsu-utils"
+version = "0.1.0"
