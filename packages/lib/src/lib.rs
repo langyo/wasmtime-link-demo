@@ -1,10 +1,10 @@
-static IO_HEAP: [u8; 8192] = [0; 8192];
+pub static mut IO_HEAP: [u8; 8192] = [0; 8192];
 
 extern "C" {
-    pub fn ready(address: i32) -> ();
+    pub fn ready() -> ();
 }
 
 #[no_mangle]
 pub fn get_heap_address() -> i32 {
-    IO_HEAP.as_ptr() as i32
+    unsafe { IO_HEAP.as_ptr() as i32 }
 }

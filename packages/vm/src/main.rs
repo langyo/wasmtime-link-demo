@@ -19,8 +19,8 @@ async fn main() -> Result<()> {
         请在对应的 wasm 模块的导出函数（`extern "C"` 内）的声明前
         加上过程宏 `#[link(wasm_import_module = "模块名")]`
     */
-    linker.func_wrap("env", "ready", |address: i32| {
-        println!("Get heap address from plugin: {}", address);
+    linker.func_wrap("env", "ready", || {
+        println!("Ready");
     })?;
 
     let mut store = Store::new(&engine, ());
@@ -32,6 +32,18 @@ async fn main() -> Result<()> {
 
     let main_func = instance.get_typed_func::<(i32, i32), i32>(&mut store, "main")?;
     main_func.call(&mut store, (0, 0))?;
+
+    let memory = instance
+        .get_memory(&mut store, "memory")
+        .ok_or(anyhow::anyhow!("no memory"))?;
+    let mut buffer = [0u8; 8192];
+    memory.read(&mut store, result as usize, &mut buffer)?;
+    let str: String = buffer
+        .iter()
+        .take_while(|&&c| c != 0)
+        .map(|&c| c as char)
+        .collect();
+    println!("Get heap string from vm: {}", str);
 
     Ok(())
 }
