@@ -1,9 +1,11 @@
 pub use lib;
 
 pub fn main() {
+    let str = "23333333333333\0".to_string();
+    let ptr = str.as_ptr();
+    let len = str.len();
     unsafe {
-        let str = "Hello from dynamic library!\0".to_string();
-        std::ptr::copy_nonoverlapping(str.as_ptr(), lib::IO_HEAP.as_mut_ptr(), str.len());
+        std::ptr::copy_nonoverlapping(ptr, lib::IO_HEAP.as_mut_ptr(), len);
 
         lib::ready();
     }

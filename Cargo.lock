@@ -1670,13 +1670,21 @@ dependencies = [
 ]
 
 [[patch.unused]]
+name = "tairitsu-boot"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "tairitsu-utils"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "hikari-components"
+name = "tairitsu-vm"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "hikari-web"
+name = "hikari-boot"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "hikari-components"
 version = "0.1.0"
